@@ -1,4 +1,4 @@
-# gdax-python
+# newsapi-python
 A Python client for the [News API](https://newsapi.org/docs/)
 
 ##### Provided under MIT License by Matt Lisivick.
