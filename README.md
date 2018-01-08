@@ -35,7 +35,7 @@ from newsapi import NewsApiClient
 Initialize the client with your API key:
 
 ```python
-api = NewsApiClient(api_key='b39f2009d5aa4ff3b6c37e6a266cb553')
+api = NewsApiClient(api_key='XXXXXXXXXXXXXXXXXXXXXXX')
 ```
 
 ### Endpoints
