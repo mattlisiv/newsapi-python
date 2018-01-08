@@ -1,0 +1,8 @@
+.idea
+*.pyc
+build/
+dist/
+*.egg-info/
+*.rst
+venv/
+*log.txt
