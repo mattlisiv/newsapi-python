@@ -8,20 +8,24 @@ class NewsApiClient(object):
         self.url = api_url.rstrip('/')
         self.auth = NewsApiAuth(api_key=api_key)
 
-    def get_top_headlines(self, q=None, sources=None, language=None, country=None):
+    def get_top_headlines(self, q=None, sources=None, language=None, country=None, category=None, page_size=None,
+                          page=None):
         # Define Payload
         payload = {}
         payload['q'] = q
         payload['sources'] = sources
         payload['language'] = language
         payload['country'] = country
+        payload['category'] = category
+        payload['pageSize'] = page_size
+        payload['page'] = page
 
         # Send Request
         r = requests.get(self.url + '/top-headlines', auth=self.auth, timeout=30, params=payload)
         return r.json()
 
-    def get_everything(self, q=None, sources=None, domains=None, from_parameter=None, to=None, language=None, sort_by=None,
-                       page=None, page_size=None):
+    def get_everything(self, q=None, sources=None, domains=None, from_parameter=None, to=None, language=None,
+                       sort_by=None, page=None, page_size=None):
         # Define Payload
         payload = {}
         payload['q'] = q
