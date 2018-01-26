@@ -21,7 +21,7 @@ class NewsApiClient(object):
         return r.json()
 
     def get_everything(self, q=None, sources=None, domains=None, from_parameter=None, to=None, language=None, sort_by=None,
-                       page=None):
+                       page=None, page_size=None):
         # Define Payload
         payload = {}
         payload['q'] = q
@@ -32,6 +32,7 @@ class NewsApiClient(object):
         payload['language'] = language
         payload['sortBy'] = sort_by
         payload['page'] = page
+        payload['pageSize'] = page_size
 
         # Send Request
         r = requests.get(self.url + '/everything', auth=self.auth, timeout=30, params=payload)
