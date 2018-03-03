@@ -27,7 +27,8 @@ class NewsApiClient(object):
 
         # Send Request
         LOGGER.debug("Params %s", payload)
-        r = requests.get(self.url + '/top-headlines', auth=self.auth, timeout=30, params=payload)
+        r = requests.get(self.url + '/top-headlines', auth=self.auth,
+                         timeout=30, params=payload)
         return r.json()
 
     def get_top_headlines(self, *args, **kwargs):
