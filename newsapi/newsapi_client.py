@@ -1,5 +1,10 @@
+import logging
+
 import requests
 from newsapi.newsapi_auth import NewsApiAuth
+
+
+LOGGER = logging.getLogger()
 
 
 class NewsApiClient(object):
@@ -13,7 +18,7 @@ class NewsApiClient(object):
         # Define Payload
         payload = {}
         payload['q'] = q
-        payload['sources'] = sources
+        payload['sources'] = ','.join(sources) if sources else None
         payload['language'] = language
         payload['country'] = country
         payload['category'] = category
@@ -21,6 +26,7 @@ class NewsApiClient(object):
         payload['page'] = page
 
         # Send Request
+        LOGGER.debug("Params %s", payload)
         r = requests.get(self.url + '/top-headlines', auth=self.auth, timeout=30, params=payload)
         return r.json()
 
@@ -28,17 +34,18 @@ class NewsApiClient(object):
                        sort_by=None, page=None, page_size=None):
         # Define Payload
         payload = {}
-        payload['q'] = q
-        payload['sources'] = sources
-        payload['domains'] = domains
+        payload['q'] = ','.join(q) if q else None
+        payload['sources'] = ','.join(sources) if sources else None
+        payload['domains'] = ','.join(domains) if domains else None
         payload['from'] = from_parameter
         payload['to'] = to
-        payload['language'] = language
+        payload['language'] = ','.join(language) if language else None
         payload['sortBy'] = sort_by
         payload['page'] = page
         payload['pageSize'] = page_size
 
         # Send Request
+        LOGGER.debug("Params %s", payload)
         r = requests.get(self.url + '/everything', auth=self.auth, timeout=30, params=payload)
         return r.json()
 
@@ -50,8 +57,6 @@ class NewsApiClient(object):
         payload['country'] = country
 
         # Send Request
+        LOGGER.debug("Params %s", payload)
         r = requests.get(self.url + '/sources', auth=self.auth, timeout=30, params=payload)
         return r.json()
-
-
-
