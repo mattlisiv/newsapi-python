@@ -13,8 +13,8 @@ class NewsApiClient(object):
         self.url = api_url.rstrip('/')
         self.auth = NewsApiAuth(api_key=api_key)
 
-    def get_top_headlines(self, q=None, sources=None, language=None, country=None, category=None, page_size=None,
-                          page=None):
+    def top_headlines(self, q=None, sources=None, language=None, country=None,
+                      category=None, page_size=None, page=None):
         # Define Payload
         payload = {}
         payload['q'] = q
@@ -30,8 +30,12 @@ class NewsApiClient(object):
         r = requests.get(self.url + '/top-headlines', auth=self.auth, timeout=30, params=payload)
         return r.json()
 
-    def get_everything(self, q=None, sources=None, domains=None, from_parameter=None, to=None, language=None,
-                       sort_by=None, page=None, page_size=None):
+    def get_top_headlines(self, *args, **kwargs):
+        return self.top_headlines(*args, **kwargs)
+
+    def everything(self, q=None, sources=None, domains=None,
+                   from_parameter=None, to=None, language=None,
+                   sort_by=None, page=None, page_size=None):
         # Define Payload
         payload = {}
         payload['q'] = ','.join(q) if q else None
@@ -46,10 +50,14 @@ class NewsApiClient(object):
 
         # Send Request
         LOGGER.debug("Params %s", payload)
-        r = requests.get(self.url + '/everything', auth=self.auth, timeout=30, params=payload)
+        r = requests.get(self.url + '/everything', auth=self.auth, timeout=30,
+                         params=payload)
         return r.json()
 
-    def get_sources(self, category=None, language=None, country=None):
+    def get_everything(self, *args, **kwargs):
+        return self.everything(*args, **kwargs)
+
+    def sources(self, category=None, language=None, country=None):
         # Define Payload
         payload = {}
         payload['category'] = category
@@ -58,5 +66,9 @@ class NewsApiClient(object):
 
         # Send Request
         LOGGER.debug("Params %s", payload)
-        r = requests.get(self.url + '/sources', auth=self.auth, timeout=30, params=payload)
+        r = requests.get(self.url + '/sources', auth=self.auth, timeout=30,
+                         params=payload)
         return r.json()
+
+    def get_sources(self, *args, **kwargs):
+        return self.sources(*args, **kwargs)
