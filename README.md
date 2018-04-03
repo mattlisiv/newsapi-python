@@ -56,7 +56,8 @@ api.get_everything(q='bitcoin')
 api.get_sources()
 ```
 
-#### For Windows users printing to _cmd_ or _powershell_
+## For Windows users printing to _cmd_ or _powershell_
+
 You will encounter an error if you attempt to print the .json() object to the command line. This is because the '{', '}' curly braces to be printed to the console.
 This becomes especially annoying if developers wish to get 'under the hood'.
 
