@@ -188,27 +188,27 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('from_param should be in the format of YYYY-MM-DD')
             else:
-                raist TypeError('from_param should be a string')
+                raise TypeError('from_param should be a string')
 
         # ... To This Date 
-        if to_param is not None:
-            if type(to_param) == str:
-                if (len(to_param)) >= 10:
-                    for i in range(len(to_param)):
-                        if (i == 4 and to_param[i] != '-') or (i == 7 and to_param[i] != '-'):
-                            raise ValueError('to_param should be in the format of YYYY-MM-DD')
+        if to is not None:
+            if type(to) == str:
+                if (len(to)) >= 10:
+                    for i in range(len(to)):
+                        if (i == 4 and to[i] != '-') or (i == 7 and to[i] != '-'):
+                            raise ValueError('to should be in the format of YYYY-MM-DD')
                         else:
-                            payload['to'] = to_param
+                            payload['to'] = to
                 else:
-                    raise ValueError('to_param should be in the format of YYYY-MM-DD')
+                    raise ValueError('to param should be in the format of YYYY-MM-DD')
             else:
-                raist TypeError('to_param should be a string')
+                raise TypeError('to param should be a string')
 
 
         # Language
         if language is not None:
             if type(language) == str:
-                if language is not in const.languages:
+                if language not in const.languages:
                     raise ValueError('invalid language')
                 else:
                     payload['language'] = language
