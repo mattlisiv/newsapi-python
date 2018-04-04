@@ -6,3 +6,4 @@ dist/
 *.rst
 venv/
 *log.txt
+*~
