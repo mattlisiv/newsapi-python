@@ -117,7 +117,7 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_everything(self, q=None, sources=None, domains=None, from_param=None, to_param=None, language=None,
+    def get_everything(self, q=None, sources=None, domains=None, from_param=None, to=None, language=None,
                        sort_by=None, page=None, page_size=None):
         """
             Search through millions of articles from over 5,000 large and small news sources and blogs.
