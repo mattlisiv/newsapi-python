@@ -1,6 +1,7 @@
 import requests
 from newsapi.newsapi_auth import NewsApiAuth
 from newsapi import const
+from newsapi.newsapi_exception import NewsAPIException
 
 
 class NewsApiClient(object):
@@ -38,7 +39,7 @@ class NewsApiClient(object):
 								
 		(int) page - Use this to page through the results if the total results found is greater than the page size.									
         """
-        
+
         # Define Payload
         payload = {}
 
@@ -49,14 +50,16 @@ class NewsApiClient(object):
             else:
                 raise TypeError('keyword/phrase q param should be a str')
 
-        # Sources 
-        if (country is not None) or (category is not None):
-            raise ValueError('cannot mix country/category param with sources param.')
-        else:
+                # Sources
+        if sources is not None:
             if type(sources) == str:
-                payload['sources'] = sources 
+                payload['sources'] = sources
             else:
                 raise TypeError('sources param should be a str')
+
+        # Sources 
+        if (country is not None) and (category is not None):
+            raise ValueError('cannot mix country/category param with sources param.')
 
         # Language 
         if language is not None:
@@ -65,20 +68,20 @@ class NewsApiClient(object):
                     payload['language'] = language
                 else:
                     raise ValueError('invalid language')
-            else: 
+            else:
                 raise TypeError('language param should be a string')
 
         # Country
         if country is not None:
             if type(country) == str:
-                if country in const.countries: 
+                if country in const.countries:
                     payload['country'] = country
                 else:
                     raise ValueError('invalid country')
             else:
-                raise TypeError('country param should be a string') 
-        
-        # Category
+                raise TypeError('country param should be a string')
+
+                # Category
         if category is not None:
             if type(category) == str:
                 if category in const.categories:
@@ -87,7 +90,7 @@ class NewsApiClient(object):
                     raise ValueError('invalid category')
             else:
                 raise TypeError('category param should be a string')
-        
+
         # Page Size
         if page_size is not None:
             if type(page_size) == int:
@@ -149,7 +152,7 @@ class NewsApiClient(object):
 
 		(int) page - Use this to page through the results if the total results found is greater than the page size.									
         """
-					   
+
         # Define Payload
         payload = {}
 
@@ -159,16 +162,14 @@ class NewsApiClient(object):
                 payload['q'] = q
             else:
                 raise TypeError('keyword/phrase q param should be a str')
- 
-        # Sources 
-        if (country is not None) or (category is not None):
-            raise ValueError('cannot mix country or category param with sources param.')
-        else:
+
+        # Sources
+        if sources is not None:
             if type(sources) == str:
                 payload['sources'] = sources
             else:
                 raise TypeError('sources param should be a str')
-       
+
         # Domains To Search
         if domains is not None:
             if type(domains) == str:
@@ -204,7 +205,6 @@ class NewsApiClient(object):
             else:
                 raise TypeError('to param should be a string')
 
-
         # Language
         if language is not None:
             if type(language) == str:
@@ -214,7 +214,6 @@ class NewsApiClient(object):
                     payload['language'] = language
             else:
                 raise TypeError('language param should be a string')
-            
 
         # Sort Method
         if sort_by is not None:
@@ -225,7 +224,7 @@ class NewsApiClient(object):
                     raise ValueError('invalid sort')
             else:
                 raise TypeError('sort_by param should be a string')
-          
+
         # Page Size
         if page_size is not None:
             if type(page_size) == int:
@@ -246,11 +245,10 @@ class NewsApiClient(object):
             else:
                 raise TypeError('page param should be an int')
 
-
         # Send Request
         r = requests.get(const.EVERYTHING_URL, auth=self.auth, timeout=30, params=payload)
 
-        #Check Status of Request
+        # Check Status of Request
         if r.status_code != requests.codes.ok:
             raise NewsAPIException(r.json())
 
@@ -275,8 +273,8 @@ class NewsApiClient(object):
 				(str) category - The category you want to get headlines for! Valid values are:
 						'business','entertainment','general','health','science','sports','technology'
 																	
-        """			   
-					   
+        """
+
         # Define Payload
         payload = {}
 
@@ -287,20 +285,20 @@ class NewsApiClient(object):
                     payload['language'] = language
                 else:
                     raise ValueError('invalid language')
-            else: 
+            else:
                 raise TypeError('language param should be a string')
 
         # Country
         if country is not None:
             if type(country) == str:
-                if country in const.countries: 
+                if country in const.countries:
                     payload['country'] = country
                 else:
                     raise ValueError('invalid country')
             else:
-                raise TypeError('country param should be a string') 
+                raise TypeError('country param should be a string')
 
-        # Category
+                # Category
         if category is not None:
             if type(category) == str:
                 if category in const.categories:
@@ -318,4 +316,3 @@ class NewsApiClient(object):
             raise NewsAPIException(r.json())
 
         return r.json()
-
