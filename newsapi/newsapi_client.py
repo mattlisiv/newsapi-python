@@ -50,16 +50,16 @@ class NewsApiClient(object):
             else:
                 raise TypeError('keyword/phrase q param should be a str')
 
-                # Sources
+        # Sources 
+        if (sources is not None) and ((country is not None) or (category is not None)):
+            raise ValueError('cannot mix country/category param with sources param.')
+
+        # Sources
         if sources is not None:
             if type(sources) == str:
                 payload['sources'] = sources
             else:
                 raise TypeError('sources param should be a str')
-
-        # Sources 
-        if (country is not None) and (category is not None):
-            raise ValueError('cannot mix country/category param with sources param.')
 
         # Language 
         if language is not None:
