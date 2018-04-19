@@ -12,7 +12,7 @@ tests_require = [
 
 setup(
     name='newsapi-python',
-    version='0.2.1',
+    version='0.2.2',
     author='Matt Lisivick',
     author_email='lisivickmatt@gmail.com',
     license='MIT',
