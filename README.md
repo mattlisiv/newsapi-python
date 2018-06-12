@@ -1,6 +1,8 @@
 # newsapi-python
 A Python client for the [News API](https://newsapi.org/docs/)
 
+[![PyPI version](https://badge.fury.io/py/newsapi-python.svg)](https://badge.fury.io/py/newsapi-python)
+
 ##### Provided under MIT License by Matt Lisivick.
 *Note: this library may be subtly broken or buggy. The code is released under
 the MIT License – please take the following message to heart:*
