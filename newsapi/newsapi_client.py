@@ -145,8 +145,7 @@ class NewsApiClient(object):
 		(str) language - The 2-letter ISO-639-1 code of the language you want to get headlines for. Valid values are:
 				'ar','de','en','es','fr','he','it','nl','no','pt','ru','se','ud','zh'
 								
-		(str) sort_by - The order to sort the articles in. Valid values are: 'relevancy','popularity','publishedAt',
-				'relevancy'
+		(str) sort_by - The order to sort the articles in. Valid values are: 'relevancy','popularity','publishedAt'
 								
 		(int) page_size - The number of results to return per page (request). 20 is the default, 100 is the maximum.		
 
