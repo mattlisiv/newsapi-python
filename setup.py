@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 install_requires = [
-    'requests==2.13.0'
+    'requests==2.17.1'
 ]
 
 tests_require = [
@@ -12,7 +12,7 @@ tests_require = [
 
 setup(
     name='newsapi-python',
-    version='0.2.2',
+    version='0.2.3',
     author='Matt Lisivick',
     author_email='lisivickmatt@gmail.com',
     license='MIT',
