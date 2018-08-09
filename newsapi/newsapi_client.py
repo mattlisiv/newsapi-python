@@ -48,7 +48,7 @@ class NewsApiClient(object):
             if type(q) == str:
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a str')
+                raise TypeError('keyword/phrase q param should be a string')
 
         # Sources 
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -59,7 +59,7 @@ class NewsApiClient(object):
             if type(sources) == str:
                 payload['sources'] = sources
             else:
-                raise TypeError('sources param should be a str')
+                raise TypeError('sources param should be a string')
 
         # Language 
         if language is not None:
@@ -94,7 +94,7 @@ class NewsApiClient(object):
         # Page Size
         if page_size is not None:
             if type(page_size) == int:
-                if page_size >= 0 and page_size <= 100:
+                if 0 <= page_size <= 100:
                     payload['pageSize'] = page_size
                 else:
                     raise ValueError('page_size param should be an int between 1 and 100')
@@ -227,7 +227,7 @@ class NewsApiClient(object):
         # Page Size
         if page_size is not None:
             if type(page_size) == int:
-                if page_size >= 0 and page_size <= 100:
+                if 0 <= page_size <= 100:
                     payload['pageSize'] = page_size
                 else:
                     raise ValueError('page_size param should be an int between 1 and 100')
