@@ -48,7 +48,7 @@ class NewsApiClient(object):
             if type(q) == str:
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a string')
+                raise TypeError('keyword/phrase q param should be a of type str')
 
         # Sources 
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -59,7 +59,7 @@ class NewsApiClient(object):
             if type(sources) == str:
                 payload['sources'] = sources
             else:
-                raise TypeError('sources param should be a string')
+                raise TypeError('sources param should be of type str')
 
         # Language 
         if language is not None:
@@ -69,7 +69,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid language')
             else:
-                raise TypeError('language param should be a string')
+                raise TypeError('language param should be of type str')
 
         # Country
         if country is not None:
@@ -79,7 +79,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid country')
             else:
-                raise TypeError('country param should be a string')
+                raise TypeError('country param should be of type str')
 
                 # Category
         if category is not None:
@@ -89,7 +89,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid category')
             else:
-                raise TypeError('category param should be a string')
+                raise TypeError('category param should be of type str')
 
         # Page Size
         if page_size is not None:
@@ -160,21 +160,21 @@ class NewsApiClient(object):
             if type(q) == str:
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a str')
+                raise TypeError('keyword/phrase q param should be of type str')
 
         # Sources
         if sources is not None:
             if type(sources) == str:
                 payload['sources'] = sources
             else:
-                raise TypeError('sources param should be a str')
+                raise TypeError('sources param should be of type str')
 
         # Domains To Search
         if domains is not None:
             if type(domains) == str:
                 payload['domains'] = domains
             else:
-                raise TypeError('domains param should be a string')
+                raise TypeError('domains param should be of type str')
 
         # Search From This Date ... 
         if from_param is not None:
@@ -188,7 +188,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('from_param should be in the format of YYYY-MM-DD')
             else:
-                raise TypeError('from_param should be a string')
+                raise TypeError('from_param should be of type str')
 
         # ... To This Date 
         if to is not None:
@@ -202,7 +202,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('to param should be in the format of YYYY-MM-DD')
             else:
-                raise TypeError('to param should be a string')
+                raise TypeError('to param should be of type str')
 
         # Language
         if language is not None:
@@ -212,7 +212,7 @@ class NewsApiClient(object):
                 else:
                     payload['language'] = language
             else:
-                raise TypeError('language param should be a string')
+                raise TypeError('language param should be of type str')
 
         # Sort Method
         if sort_by is not None:
@@ -222,7 +222,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid sort')
             else:
-                raise TypeError('sort_by param should be a string')
+                raise TypeError('sort_by param should be of type str')
 
         # Page Size
         if page_size is not None:
@@ -285,7 +285,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid language')
             else:
-                raise TypeError('language param should be a string')
+                raise TypeError('language param should be of type str')
 
         # Country
         if country is not None:
@@ -295,7 +295,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid country')
             else:
-                raise TypeError('country param should be a string')
+                raise TypeError('country param should be of type str')
 
                 # Category
         if category is not None:
@@ -305,7 +305,7 @@ class NewsApiClient(object):
                 else:
                     raise ValueError('invalid category')
             else:
-                raise TypeError('category param should be a string')
+                raise TypeError('category param should be of type str')
 
         # Send Request
         r = requests.get(const.SOURCES_URL, auth=self.auth, timeout=30, params=payload)

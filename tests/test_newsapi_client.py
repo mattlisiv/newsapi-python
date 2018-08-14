@@ -10,7 +10,7 @@ class NewsApiClientTest(unittest.TestCase):
         self.api = NewsApiClient(key)
 
     def test_api_top_headline(self):
-        # Raise TypeError if Keyword/Phrase param is not a string
+        # Raise TypeError if Keyword/Phrase param is not of type str
         q = 0
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(q=q)
@@ -22,12 +22,12 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(sources=sources, country=country, category=category)
 
-        # Raise TypeError if sources param is not a string
+        # Raise TypeError if sources param is not of type str
         sources = 0
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(sources=sources)
 
-        # Raise TypeError if language param is not a string
+        # Raise TypeError if language param is not of type str
         language = 0
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(language=language)
@@ -37,7 +37,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(language=language)
 
-        # Raise TypeError if country param is not a string
+        # Raise TypeError if country param is not of type str
         country = 0
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(country=country)
@@ -47,7 +47,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(country=country)
 
-        # Raises TypeError if category param is not a string
+        # Raises TypeError if category param is not of type str
         category = 0
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(category=category)
@@ -87,17 +87,17 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.api.get_everything(q=q)
 
-        # Raise TypeError if sources param is not a string
+        # Raise TypeError if sources param is not of type str
         sources = 0
         with self.assertRaises(TypeError):
             self.api.get_everything(sources=sources)
 
-        # Raise TypeError is domains param is not a string
+        # Raise TypeError is domains param is not of type str
         domains = 0
         with self.assertRaises(TypeError):
             self.api.get_everything(domains=domains)
 
-        # Raise TypeError is from_param param is not a string
+        # Raise TypeError is from_param param is not of type str
         from_param = 0
         with self.assertRaises(TypeError):
             self.api.get_everything(from_param=from_param)
@@ -107,7 +107,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_everything(from_param=from_param)
 
-        # Raise TypeError if to param is not a string
+        # Raise TypeError if to param is not of type str
         to = 1
         with self.assertRaises(TypeError):
             self.api.get_everything(to=to)
@@ -117,7 +117,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_everything(to=to)
 
-        # Raise TypeError if language param is not a string
+        # Raise TypeError if language param is not of type str
         language = 0
         with self.assertRaises(TypeError):
             self.api.get_everything(language=language)
@@ -127,7 +127,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_everything(language=language)
 
-        # Raise TypeError is sort_by param is not a string
+        # Raise TypeError is sort_by param is not of type str
         sort_by = 1
         with self.assertRaises(TypeError):
             self.api.get_everything(sort_by=sort_by)
@@ -162,7 +162,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_everything(page=page)
 
     def test_api_get_sources(self):
-        # Raise TypeError if language param is not a string
+        # Raise TypeError if language param is not of type str
         language = 0
         with self.assertRaises(TypeError):
             self.api.get_sources(language=language)
@@ -172,7 +172,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_sources(language=language)
 
-        # Raise TypeError if country param is not a string
+        # Raise TypeError if country param is not of type str
         country = 0
         with self.assertRaises(TypeError):
             self.api.get_sources(country=country)
@@ -182,7 +182,7 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_sources(country=country)
 
-        # Raises TypeError if category param is not a string
+        # Raises TypeError if category param is not of type str
         category = 0
         with self.assertRaises(TypeError):
             self.api.get_sources(category=category)
