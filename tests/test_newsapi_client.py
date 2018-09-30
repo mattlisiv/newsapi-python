@@ -97,6 +97,11 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.api.get_everything(domains=domains)
 
+        # Raise TypeError is exclude_domains param is not of type str
+        exclude_domains = 0
+        with self.assertRaises(TypeError):
+            self.api.get_everything(exclude_domains=exclude_domains)
+
         # Raise TypeError is from_param param is not of type str
         from_param = 0
         with self.assertRaises(TypeError):
