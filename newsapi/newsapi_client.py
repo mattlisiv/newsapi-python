@@ -9,7 +9,7 @@ class NewsApiClient(object):
     def __init__(self, api_key):
         self.auth = NewsApiAuth(api_key=api_key)
 
-    def get_top_headlines(self, q=None, sources=None, language=None, country=None, category=None, page_size=None,
+    def get_top_headlines(self, q=None, sources=None, language='en', country=None, category=None, page_size=None,
                           page=None):
         """
             Returns live top and breaking headlines for a country, specific category in a country, single source, or multiple sources..
@@ -81,7 +81,7 @@ class NewsApiClient(object):
             else:
                 raise TypeError('country param should be of type str')
 
-                # Category
+        # Category
         if category is not None:
             if type(category) == str:
                 if category in const.categories:
