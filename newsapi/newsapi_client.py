@@ -140,7 +140,7 @@ class NewsApiClient(object):
 
         (str) exclude_domains - A comma_seperated string of domains to be excluded from the search
 
-		(str) from_parameter - A date and optional time for the oldest article allowed.
+		(str) from_param - A date and optional time for the oldest article allowed.
                                        (e.g. 2018-03-05 or 2018-03-05T03:46:15)
 
 		(str) to - A date and optional time for the newest article allowed.
