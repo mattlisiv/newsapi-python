@@ -6,11 +6,11 @@ from newsapi.newsapi_exception import NewsAPIException
 
 class NewsApiClient(object):
 
-    def __init__(self, api_key):
+    def __init__(self, api_key: str):
         self.auth = NewsApiAuth(api_key=api_key)
 
-    def get_top_headlines(self, q=None, sources=None, language='en', country=None, category=None, page_size=None,
-                          page=None):
+    def get_top_headlines(self, q=None: str, sources=None: str, language='en': str, country=None: str, category=None: str, page_size=20: int,
+                          page=None: int) -> dict:
         """
             Returns live top and breaking headlines for a country, specific category in a country, single source, or multiple sources..
 
@@ -48,7 +48,7 @@ class NewsApiClient(object):
             if type(q) == str:
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a of type str')
+                raise TypeError('keyword/phrase q param should be of type str')
 
         # Sources
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -120,9 +120,9 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_everything(self, q=None, sources=None, domains=None, exclude_domains=None,
-                       from_param=None, to=None, language=None, sort_by=None, page=None,
-                       page_size=None):
+    def get_everything(self, q=None: str, sources=None: str, domains=None: str, exclude_domains=None: str,
+                       from_param=None: str, to=None: str, language='en': str, sort_by=None: str, page=None: int,
+                       page_size=20: int) -> dict:
         """
             Search through millions of articles from over 5,000 large and small news sources and blogs.
 
@@ -262,7 +262,7 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_sources(self, category=None, language=None, country=None):
+    def get_sources(self, category=None: str, language='en': str, country=None: str) -> dict:
         """
             Returns the subset of news publishers that top headlines...
 

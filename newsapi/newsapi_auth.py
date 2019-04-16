@@ -3,7 +3,7 @@ from requests.auth import AuthBase
 
 class NewsApiAuth(AuthBase):
     # Provided by newsapi: https://newsapi.org/docs/authentication
-    def __init__(self, api_key):
+    def __init__(self, api_key: str):
         self.api_key = api_key
 
     def __call__(self, request):
@@ -11,7 +11,7 @@ class NewsApiAuth(AuthBase):
         return request
 
 
-def get_auth_headers(api_key):
+def get_auth_headers(api_key: str) -> dict:
     return {
         'Content-Type': 'Application/JSON',
         'Authorization': api_key
