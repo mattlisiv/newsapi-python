@@ -1,7 +1,10 @@
+from typing import Dict, Any
+
 import requests
-from newsapi.newsapi_auth import NewsApiAuth
-from newsapi import const
-from newsapi.newsapi_exception import NewsAPIException
+
+from .newsapi_auth import NewsApiAuth
+from . import const
+from .newsapi_exception import NewsAPIException
 
 
 class NewsApiClient(object):
@@ -9,8 +12,8 @@ class NewsApiClient(object):
     def __init__(self, api_key: str):
         self.auth = NewsApiAuth(api_key=api_key)
 
-    def get_top_headlines(self, q=None: str, sources=None: str, language='en': str, country=None: str, category=None: str, page_size=20: int,
-                          page=None: int) -> dict:
+    def get_top_headlines(self, q: str = None, sources: str = None, language: str = 'en', country: str = None, category: str = None, page_size: int = 20,
+                          page: int = None) -> Dict[str, Any]:
         """
             Returns live top and breaking headlines for a country, specific category in a country, single source, or multiple sources..
 
@@ -120,9 +123,9 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_everything(self, q=None: str, sources=None: str, domains=None: str, exclude_domains=None: str,
-                       from_param=None: str, to=None: str, language='en': str, sort_by=None: str, page=None: int,
-                       page_size=20: int) -> dict:
+    def get_everything(self, q: str = None, sources: str = None, domains: str = None, exclude_domains: str = None,
+                       from_param: str = None, to: str = None, language: str = 'en', sort_by: str = None, page: int = None,
+                       page_size: int = 20) -> Dict[str, Any]:
         """
             Search through millions of articles from over 5,000 large and small news sources and blogs.
 
@@ -262,7 +265,7 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_sources(self, category=None: str, language='en': str, country=None: str) -> dict:
+    def get_sources(self, category: str = None, language: str = 'en', country: str = None) -> Dict[str, Any]:
         """
             Returns the subset of news publishers that top headlines...
 
