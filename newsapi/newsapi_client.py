@@ -2,6 +2,7 @@ import requests
 from newsapi.newsapi_auth import NewsApiAuth
 from newsapi import const
 from newsapi.newsapi_exception import NewsAPIException
+from sys import version_info
 
 
 class NewsApiClient(object):
@@ -45,10 +46,17 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if type(q) == str:
+            if version_info[0] == 3:
+                q_is_str = isinstance(q, str)
+            elif version_info[0] == 2:
+                q_is_str = isinstance(q, basestring)
+            else:
+                raise SystemError("unsupported version of python detected (supported versions: 2, 3)")
+
+            if q_is_str:
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a of type str')
+                raise TypeError('keyword/phrase q param should be of type str')
 
         # Sources
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -160,7 +168,14 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if type(q) == str:
+            if version_info[0] == 3:
+                q_is_str = isinstance(q, str)
+            elif version_info[0] == 2:
+                q_is_str = isinstance(q, basestring)
+            else:
+                raise SystemError("unsupported version of python detected (supported versions: 2, 3)")
+
+            if q_is_str:
                 payload['q'] = q
             else:
                 raise TypeError('keyword/phrase q param should be of type str')
