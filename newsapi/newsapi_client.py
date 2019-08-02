@@ -2,6 +2,7 @@ import requests
 from newsapi.newsapi_auth import NewsApiAuth
 from newsapi import const
 from newsapi.newsapi_exception import NewsAPIException
+from sys import version_info
 
 
 class NewsApiClient(object):
@@ -45,10 +46,10 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if type(q) == str:
+            if is_valid_string(q):
                 payload['q'] = q
             else:
-                raise TypeError('keyword/phrase q param should be a of type str')
+                raise TypeError('keyword/phrase q param should be of type str')
 
         # Sources
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -56,14 +57,14 @@ class NewsApiClient(object):
 
         # Sources
         if sources is not None:
-            if type(sources) == str:
+            if is_valid_string(sources):
                 payload['sources'] = sources
             else:
                 raise TypeError('sources param should be of type str')
 
         # Language
         if language is not None:
-            if type(language) == str:
+            if is_valid_string(language):
                 if language in const.languages:
                     payload['language'] = language
                 else:
@@ -73,7 +74,7 @@ class NewsApiClient(object):
 
         # Country
         if country is not None:
-            if type(country) == str:
+            if is_valid_string(country):
                 if country in const.countries:
                     payload['country'] = country
                 else:
@@ -83,7 +84,7 @@ class NewsApiClient(object):
 
         # Category
         if category is not None:
-            if type(category) == str:
+            if is_valid_string(category):
                 if category in const.categories:
                     payload['category'] = category
                 else:
@@ -160,21 +161,21 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if type(q) == str:
+            if is_valid_string(q):
                 payload['q'] = q
             else:
                 raise TypeError('keyword/phrase q param should be of type str')
 
         # Sources
         if sources is not None:
-            if type(sources) == str:
+            if is_valid_string(sources):
                 payload['sources'] = sources
             else:
                 raise TypeError('sources param should be of type str')
 
         # Domains To Search
         if domains is not None:
-            if type(domains) == str:
+            if is_valid_string(domains):
                 payload['domains'] = domains
             else:
                 raise TypeError('domains param should be of type str')
@@ -187,7 +188,7 @@ class NewsApiClient(object):
 
         # Search From This Date ...
         if from_param is not None:
-            if type(from_param) == str:
+            if is_valid_string(from_param):
                 if (len(from_param)) >= 10:
                     for i in range(len(from_param)):
                         if (i == 4 and from_param[i] != '-') or (i == 7 and from_param[i] != '-'):
@@ -201,7 +202,7 @@ class NewsApiClient(object):
 
         # ... To This Date
         if to is not None:
-            if type(to) == str:
+            if is_valid_string(to):
                 if (len(to)) >= 10:
                     for i in range(len(to)):
                         if (i == 4 and to[i] != '-') or (i == 7 and to[i] != '-'):
@@ -215,7 +216,7 @@ class NewsApiClient(object):
 
         # Language
         if language is not None:
-            if type(language) == str:
+            if is_valid_string(language):
                 if language not in const.languages:
                     raise ValueError('invalid language')
                 else:
@@ -225,7 +226,7 @@ class NewsApiClient(object):
 
         # Sort Method
         if sort_by is not None:
-            if type(sort_by) == str:
+            if is_valid_string(sort_by):
                 if sort_by in const.sort_method:
                     payload['sortBy'] = sort_by
                 else:
@@ -288,7 +289,7 @@ class NewsApiClient(object):
 
         # Language
         if language is not None:
-            if type(language) == str:
+            if is_valid_string(language):
                 if language in const.languages:
                     payload['language'] = language
                 else:
@@ -298,7 +299,7 @@ class NewsApiClient(object):
 
         # Country
         if country is not None:
-            if type(country) == str:
+            if is_valid_string(country):
                 if country in const.countries:
                     payload['country'] = country
                 else:
@@ -308,7 +309,7 @@ class NewsApiClient(object):
 
                 # Category
         if category is not None:
-            if type(category) == str:
+            if is_valid_string(category):
                 if category in const.categories:
                     payload['category'] = category
                 else:
@@ -324,3 +325,12 @@ class NewsApiClient(object):
             raise NewsAPIException(r.json())
 
         return r.json()
+
+
+def is_valid_string(var):
+    if version_info[0] == 3:
+        return isinstance(var, str)
+    elif version_info[0] == 2:
+        return isinstance(var, basestring)
+    else:
+        raise SystemError("unsupported version of python detected (supported versions: 2, 3)")
