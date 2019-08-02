@@ -326,6 +326,7 @@ class NewsApiClient(object):
 
         return r.json()
 
+
 def is_valid_string(var):
     if version_info[0] == 3:
         return isinstance(var, str)
