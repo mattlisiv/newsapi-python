@@ -102,26 +102,6 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.api.get_everything(exclude_domains=exclude_domains)
 
-        # Raise TypeError is from_param param is not of type str
-        from_param = 0
-        with self.assertRaises(TypeError):
-            self.api.get_everything(from_param=from_param)
-
-        # Raise ValueError if param is not in the format YYYY-MM-DD
-        from_param = '2016-6-4'
-        with self.assertRaises(ValueError):
-            self.api.get_everything(from_param=from_param)
-
-        # Raise TypeError if to param is not of type str
-        to = 1
-        with self.assertRaises(TypeError):
-            self.api.get_everything(to=to)
-
-        # Raise ValueError if to param is not in the format YYYY-MM-DD
-        to = '2016-6-24'
-        with self.assertRaises(ValueError):
-            self.api.get_everything(to=to)
-
         # Raise TypeError if language param is not of type str
         language = 0
         with self.assertRaises(TypeError):
