@@ -1,6 +1,7 @@
 import requests
 from newsapi.newsapi_auth import NewsApiAuth
 from newsapi import const
+from newsapi import utils
 from newsapi.newsapi_exception import NewsAPIException
 from sys import version_info
 
@@ -145,10 +146,12 @@ class NewsApiClient(object):
 
         (str) exclude_domains - A comma_seperated string of domains to be excluded from the search
 
-		(str) from_param - A date and optional time for the oldest article allowed.
-                                       (e.g. 2018-03-05 or 2018-03-05T03:46:15)
+		(str, date, datetime, float, int, or None)
+        from_param - A date and optional time for the oldest article allowed.
+                     (e.g. 2018-03-05 or 2018-03-05T03:46:15)
 
-		(str) to - A date and optional time for the newest article allowed.
+		(str, date, datetime, float, int, or None)
+        to - A date and optional time for the newest article allowed.
 
 		(str) language - The 2-letter ISO-639-1 code of the language you want to get headlines for. Valid values are:
 				'ar','de','en','es','fr','he','it','nl','no','pt','ru','se','ud','zh'
@@ -192,31 +195,11 @@ class NewsApiClient(object):
 
         # Search From This Date ...
         if from_param is not None:
-            if is_valid_string(from_param):
-                if (len(from_param)) >= 10:
-                    for i in range(len(from_param)):
-                        if (i == 4 and from_param[i] != '-') or (i == 7 and from_param[i] != '-'):
-                            raise ValueError('from_param should be in the format of YYYY-MM-DD')
-                        else:
-                            payload['from'] = from_param
-                else:
-                    raise ValueError('from_param should be in the format of YYYY-MM-DD')
-            else:
-                raise TypeError('from_param should be of type str')
+            payload['from'] = utils.stringify_date_param(from_param)
 
         # ... To This Date
         if to is not None:
-            if is_valid_string(to):
-                if (len(to)) >= 10:
-                    for i in range(len(to)):
-                        if (i == 4 and to[i] != '-') or (i == 7 and to[i] != '-'):
-                            raise ValueError('to should be in the format of YYYY-MM-DD')
-                        else:
-                            payload['to'] = to
-                else:
-                    raise ValueError('to param should be in the format of YYYY-MM-DD')
-            else:
-                raise TypeError('to param should be of type str')
+            payload['to'] = utils.stringify_date_param(to)
 
         # Language
         if language is not None:
