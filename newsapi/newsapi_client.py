@@ -10,9 +10,9 @@ class NewsApiClient(object):
     def __init__(self, api_key, session=None):
         self.auth = NewsApiAuth(api_key=api_key)
         if session is None:
-            self.session = requests.Session()
+            self.request_method = requests
         else:
-            self.session = session
+            self.request_method = session
 
     def get_top_headlines(self, q=None, sources=None, language='en', country=None, category=None, page_size=None,
                           page=None):
@@ -117,7 +117,7 @@ class NewsApiClient(object):
                 raise TypeError('page param should be an int')
 
         # Send Request
-        r = self.session.get(const.TOP_HEADLINES_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.request_method.get(const.TOP_HEADLINES_URL, auth=self.auth, timeout=30, params=payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
@@ -259,7 +259,7 @@ class NewsApiClient(object):
                 raise TypeError('page param should be an int')
 
         # Send Request
-        r = self.session.get(const.EVERYTHING_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.request_method.get(const.EVERYTHING_URL, auth=self.auth, timeout=30, params=payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
@@ -322,7 +322,7 @@ class NewsApiClient(object):
                 raise TypeError('category param should be of type str')
 
         # Send Request
-        r = self.session.get(const.SOURCES_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.request_method.get(const.SOURCES_URL, auth=self.auth, timeout=30, params=payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
