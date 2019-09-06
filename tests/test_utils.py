@@ -1,5 +1,4 @@
 import datetime
-import time
 import unittest
 
 from newsapi import utils
