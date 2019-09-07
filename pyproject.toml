@@ -1,3 +1,2 @@
 [tool.black]
-line-length = 127
-skip-string-normalization = true
+line-length = 120

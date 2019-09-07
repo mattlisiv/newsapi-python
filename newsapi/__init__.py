@@ -1,1 +1,1 @@
-from newsapi.newsapi_client import NewsApiClient
+from newsapi.newsapi_client import NewsApiClient  # noqa

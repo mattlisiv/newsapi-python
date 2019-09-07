@@ -10,7 +10,9 @@ exclude =
     requirements/,
     requirements.txt,
 
-max-line-length = 127
+# GitHub source code UI uses 120 columns.  (This varies by browser/OS,
+# but 120 is the least common denominator.)
+max-line-length = 120
 hang-closing = False
 max-complexity = 10
 

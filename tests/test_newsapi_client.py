@@ -1,12 +1,12 @@
-import unittest
 import os
+import unittest
+
 from newsapi.newsapi_client import NewsApiClient
 
 
 class NewsApiClientTest(unittest.TestCase):
-
     def setUp(self):
-        key = os.environ.get('news_api_secret')
+        key = os.environ.get("news_api_secret")
         self.api = NewsApiClient(key)
 
     def test_api_top_headline(self):
@@ -16,9 +16,9 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_top_headlines(q=q)
 
         # Raise ValueError if sources param in not None and country param or category param is not None
-        sources = 'techcrunch'
-        country = 'us'
-        category = 'business'
+        sources = "techcrunch"
+        country = "us"
+        category = "business"
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(sources=sources, country=country, category=category)
 
@@ -33,7 +33,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_top_headlines(language=language)
 
         # Raise ValueError if language param is invalid
-        language = 'xx'
+        language = "xx"
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(language=language)
 
@@ -43,7 +43,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_top_headlines(country=country)
 
         # Raise ValueError if country param is invalid
-        country = 'xx'
+        country = "xx"
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(country=country)
 
@@ -53,12 +53,12 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_top_headlines(category=category)
 
         # Raises ValueError if category param is invalid
-        category = 'x0x'
+        category = "x0x"
         with self.assertRaises(ValueError):
             self.api.get_top_headlines(category=category)
 
         # Raises TypeError if page_size param is not an int
-        page_size = '1'
+        page_size = "1"
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(page_size=page_size)
 
@@ -72,7 +72,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_top_headlines(page_size=page_size)
 
         # Raises a TypeError is page param is not an int
-        page = '1'
+        page = "1"
         with self.assertRaises(TypeError):
             self.api.get_top_headlines(page=page)
 
@@ -108,7 +108,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_everything(language=language)
 
         # Raise ValueError if language param is invalid
-        language = 'xx'
+        language = "xx"
         with self.assertRaises(ValueError):
             self.api.get_everything(language=language)
 
@@ -118,12 +118,12 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_everything(sort_by=sort_by)
 
         # Raise ValueError if soft_by param is invalid
-        sort_by = 'sort'
+        sort_by = "sort"
         with self.assertRaises(ValueError):
             self.api.get_everything(sort_by=sort_by)
 
         # Raises TypeError if page_size param is not an int
-        page_size = '1'
+        page_size = "1"
         with self.assertRaises(TypeError):
             self.api.get_everything(page_size=page_size)
 
@@ -137,7 +137,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_everything(page_size=page_size)
 
         # Raises a TypeError is page param is not an int
-        page = '1'
+        page = "1"
         with self.assertRaises(TypeError):
             self.api.get_everything(page=page)
 
@@ -153,7 +153,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_sources(language=language)
 
         # Raise ValueError if language param is invalid
-        language = 'xx'
+        language = "xx"
         with self.assertRaises(ValueError):
             self.api.get_sources(language=language)
 
@@ -163,7 +163,7 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_sources(country=country)
 
         # Raise ValueError if country param is invalid
-        country = 'xx'
+        country = "xx"
         with self.assertRaises(ValueError):
             self.api.get_sources(country=country)
 
@@ -173,6 +173,6 @@ class NewsApiClientTest(unittest.TestCase):
             self.api.get_sources(category=category)
 
         # Raises ValueError if category param is invalid
-        category = 'x0x'
+        category = "x0x"
         with self.assertRaises(ValueError):
             self.api.get_sources(category=category)
