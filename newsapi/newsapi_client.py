@@ -14,7 +14,7 @@ class NewsApiClient(object):
         else:
             self.request_method = session
 
-    def get_top_headlines(
+    def get_top_headlines(  # noqa: C901
         self, q=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
     ):
         """
@@ -132,7 +132,7 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_everything(
+    def get_everything(  # noqa: C901
         self,
         q=None,
         sources=None,
@@ -273,7 +273,7 @@ class NewsApiClient(object):
 
         return r.json()
 
-    def get_sources(self, category=None, language=None, country=None):
+    def get_sources(self, category=None, language=None, country=None):  # noqa: C901
         """
         Returns the subset of news publishers that top headlines...
 
