@@ -28,6 +28,7 @@ Use :meth:`newsapi.NewsApiClient.get_top_headlines` to pull from the `/top-headl
     api.get_top_headlines()
     api.get_top_headlines(q="hurricane")
     api.get_top_headlines(category="sports")
+    api.get_top_headlines(sources="abc-news,ars-technica", page_size=50)
 
 Accessing the `/everything` Endpoint
 ------------------------------------

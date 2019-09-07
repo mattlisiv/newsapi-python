@@ -9,17 +9,17 @@ from newsapi.utils import is_valid_string, stringify_date_param
 
 
 class NewsApiClient(object):
-    """Core client class used to fetch data from News API endpoints.
+    """The core client object used to fetch data from News API endpoints.
 
     :param api_key: Your API key, a length-32 UUID string provided for your News API account.
         You must `register <https://newsapi.org/register>`_ for a News API key.
     :type api_key: str
 
-    :param session: (optional) An optional ``requests.Session`` instance from which to execute requests.
+    :param session: An optional :class:`requests.Session` instance from which to execute requests.
         **Note**: If you provide a ``session`` instance, :class:`NewsApiClient` will *not* close the session
         for you.  Remember to call ``session.close()``, or use the session as a context manager, to close
         the socket and free up resources.
-    :type session: `requests.Session <https://2.python-requests.org/en/master/user/advanced/#session-objects>`_
+    :type session: `requests.Session <https://2.python-requests.org/en/master/user/advanced/#session-objects>`_ or None
     """
 
     def __init__(self, api_key, session=None):
@@ -44,20 +44,27 @@ class NewsApiClient(object):
             `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
         :type q: str or None
 
-        :param sources:
-        :type sources:
+        :param sources: A comma-seperated string of identifiers for the news sources or blogs you want headlines from.
+            Use :meth:`NewsApiClient.get_sources` to locate these programmatically, or look at the
+            `sources index <https://newsapi.org/sources>`_.  **Note**: you can't mix this param with the
+            ``country`` or ``category`` params.
+        :type sources: str or None
 
         :param language: The 2-letter ISO-639-1 code of the language you want to get headlines for.
             See :data:`newsapi.const.languages` for the set of allowed values.
+            The default for this method is ``"en"`` (English).  **Note**: this parameter is not mentioned in the
+            `/top-headlines documentation <https://newsapi.org/docs/endpoints/top-headlines>`_ as of Sep. 2019,
+            but *is* supported by the API.
         :type language: str or None
 
         :param country: The 2-letter ISO 3166-1 code of the country you want to get headlines for.
             See :data:`newsapi.const.countries` for the set of allowed values.
+            **Note**: you can't mix this parameter with the ``sources`` param.
         :type country: str or None
 
         :param category: The category you want to get headlines for.
             See :data:`newsapi.const.categories` for the set of allowed values.
-            Note: you can't mix this parameter with the ``sources`` param.
+            **Note**: you can't mix this parameter with the ``sources`` param.
         :type category: str or None
 
         :param page_size: Use this to page through the results if the total results found is
@@ -172,6 +179,11 @@ class NewsApiClient(object):
         :param q: Keywords or a phrase to search for in the article title and body.  See the official News API
             `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
         :type q: str or None
+
+        :param sources: A comma-seperated string of identifiers for the news sources or blogs you want headlines from.
+            Use :meth:`NewsApiClient.get_sources` to locate these programmatically, or look at the
+            `sources index <https://newsapi.org/sources>`_.
+        :type sources: str or None
 
         :param domains:  A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com)
             to restrict the search to.
