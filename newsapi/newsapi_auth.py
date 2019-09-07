@@ -12,7 +12,4 @@ class NewsApiAuth(AuthBase):
 
 
 def get_auth_headers(api_key):
-    return {
-        'Content-Type': 'Application/JSON',
-        'Authorization': api_key
-    }
+    return {"Content-Type": "Application/JSON", "Authorization": api_key}

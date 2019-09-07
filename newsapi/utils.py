@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-__all__ = ("stringify_date_param",)
-
 import datetime
 import re
 import sys
+
+__all__ = ("stringify_date_param",)
+
 
 # Date in ISO-8601 format
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -24,9 +25,7 @@ def stringify_date_param(dt):
         elif len(dt) == DATETIME_LEN:
             validate_datetime_str(dt)
         else:
-            raise ValueError(
-                "Date input should be in format of either YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS"
-            )
+            raise ValueError("Date input should be in format of either YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS")
         return dt
     # Careful: datetime.datetime is subclass of datetime.date!
     elif isinstance(dt, datetime.datetime):
@@ -37,9 +36,7 @@ def stringify_date_param(dt):
     elif is_valid_num(dt):
         return datetime.datetime.utcfromtimestamp(dt).strftime(DATETIME_FMT)
     else:
-        raise TypeError(
-            "Date input must be one of: str, date, datetime, float, int, or None"
-        )
+        raise TypeError("Date input must be one of: str, date, datetime, float, int, or None")
 
 
 def validate_date_str(datestr):
@@ -67,15 +64,13 @@ if PY3:
 elif PY2:
 
     def is_valid_string(var):
-        return isinstance(var, basestring)
+        return isinstance(var, basestring)  # noqa
 
     def is_valid_num(var):
-        return isinstance(var, (int, float, long))
+        return isinstance(var, (int, float, long))  # noqa
 
 
 else:
 
     def is_valid_string(var):
-        raise SystemError(
-            "unsupported version of python detected (supported versions: 2, 3)"
-        )
+        raise SystemError("unsupported version of python detected (supported versions: 2, 3)")

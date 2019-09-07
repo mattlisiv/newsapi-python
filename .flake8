@@ -1,0 +1,22 @@
+[flake8]
+doctests = False
+exclude =
+    .git,
+    .github/,
+    docs/,
+    doc/,
+    *.pyc,
+    __pycache__,
+    requirements/,
+    requirements.txt,
+
+# GitHub source code UI uses 120 columns.  (This varies by browser/OS,
+# but 120 is the least common denominator.)
+max-line-length = 120
+hang-closing = False
+max-complexity = 10
+
+# Default flake8 formatting is '%(path)s:%(row)d:%(col)d: %(code)s %(text)s'
+format = '%(path)s:   row %(row)d:   %(code)s %(text)s'
+
+
