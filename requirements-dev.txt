@@ -2,5 +2,6 @@ black
 flake8
 isort
 pytest
-recommonmark
 Sphinx
+twine
+wheel

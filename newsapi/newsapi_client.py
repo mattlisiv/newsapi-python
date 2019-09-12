@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import requests
 
 from newsapi import const
@@ -7,6 +9,19 @@ from newsapi.utils import is_valid_string, stringify_date_param
 
 
 class NewsApiClient(object):
+    """The core client object used to fetch data from News API endpoints.
+
+    :param api_key: Your API key, a length-32 UUID string provided for your News API account.
+        You must `register <https://newsapi.org/register>`_ for a News API key.
+    :type api_key: str
+
+    :param session: An optional :class:`requests.Session` instance from which to execute requests.
+        **Note**: If you provide a ``session`` instance, :class:`NewsApiClient` will *not* close the session
+        for you.  Remember to call ``session.close()``, or use the session as a context manager, to close
+        the socket and free up resources.
+    :type session: `requests.Session <https://2.python-requests.org/en/master/user/advanced/#session-objects>`_ or None
+    """
+
     def __init__(self, api_key, session=None):
         self.auth = NewsApiAuth(api_key=api_key)
         if session is None:
@@ -17,42 +32,54 @@ class NewsApiClient(object):
     def get_top_headlines(  # noqa: C901
         self, q=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
     ):
-        """
+        """Call the `/top-headlines` endpoint.
+
         Fetch live top and breaking headlines.
 
-        This endpoint provides live top and breaking headlines for a
-        country, specific category in a country, single source, or
-        multiple sources. You can also search with keywords.
-        Articles are sorted by the earliest date published first.
+        This endpoint provides live top and breaking headlines for a country, specific category in a country,
+        single source, or multiple sources. You can also search with keywords.  Articles are sorted by the earliest
+        date published first.
 
-        Optional parameters:
-            (str) q - return headlines w/ specific keyword or phrase. For example:
-                      'bitcoin', 'trump', 'tesla', 'ethereum', etc.
+        :param q: Keywords or a phrase to search for in the article title and body.  See the official News API
+            `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
+        :type q: str or None
 
-            (str) sources - return headlines of news sources! some Valid values are:
-                            'bbc-news', 'the-verge', 'abc-news', 'crypto coins news',
-                            'ary news','associated press','wired','aftenposten','australian financial review','axios',
-                            'bbc news','bild','blasting news','bloomberg','business insider','engadget','google news',
-                            'hacker news','info money,'recode','techcrunch','techradar','the next web','the verge' etc.
+        :param sources: A comma-seperated string of identifiers for the news sources or blogs you want headlines from.
+            Use :meth:`NewsApiClient.get_sources` to locate these programmatically, or look at the
+            `sources index <https://newsapi.org/sources>`_.  **Note**: you can't mix this param with the
+            ``country`` or ``category`` params.
+        :type sources: str or None
 
-            (str) language - The 2-letter ISO-639-1 code of the language you want to get headlines for.
-                             Valid values are:
-                             'ar','de','en','es','fr','he','it','nl','no','pt','ru','se','ud','zh'
+        :param language: The 2-letter ISO-639-1 code of the language you want to get headlines for.
+            See :data:`newsapi.const.languages` for the set of allowed values.
+            The default for this method is ``"en"`` (English).  **Note**: this parameter is not mentioned in the
+            `/top-headlines documentation <https://newsapi.org/docs/endpoints/top-headlines>`_ as of Sep. 2019,
+            but *is* supported by the API.
+        :type language: str or None
 
-            (str) country - The 2-letter ISO 3166-1 code of the country you want to get headlines! Valid values are:
-                            'ae','ar','at','au','be','bg','br','ca','ch','cn','co','cu','cz','de','eg','fr','gb','gr',
-                            'hk','hu','id','ie','il','in','it','jp','kr','lt','lv','ma','mx','my','ng','nl','no','nz',
-                            'ph','pl','pt','ro','rs','ru','sa','se','sg','si','sk','th','tr','tw','ua','us'
+        :param country: The 2-letter ISO 3166-1 code of the country you want to get headlines for.
+            See :data:`newsapi.const.countries` for the set of allowed values.
+            **Note**: you can't mix this parameter with the ``sources`` param.
+        :type country: str or None
 
-            (str) category - The category you want to get headlines for! Valid values are:
-                             'business','entertainment','general','health','science','sports','technology'
+        :param category: The category you want to get headlines for.
+            See :data:`newsapi.const.categories` for the set of allowed values.
+            **Note**: you can't mix this parameter with the ``sources`` param.
+        :type category: str or None
 
-            (int) page_size - The number of results to return per page (request). 20 is the default, 100 is the maximum.
+        :param page_size: Use this to page through the results if the total results found is
+            greater than the page size.
+        :type page_size: int or None
 
-            (int) page - Use this to page through the results if the total results found is greater than the page size.
+        :param page: The number of results to return per page (request).
+            20 is the default, 100 is the maximum.
+        :type page: int or None
+
+        :return: JSON response as nested Python dictionary.
+        :rtype: dict
+        :raises NewsAPIException: If the ``"status"`` value of the response is ``"error"`` rather than ``"ok"``.
         """
 
-        # Define Payload
         payload = {}
 
         # Keyword/Phrase
@@ -145,48 +172,52 @@ class NewsApiClient(object):
         page=None,
         page_size=None,
     ):
+        """Call the `/everything` endpoint.
+
+        Search through millions of articles from over 30,000 large and small news sources and blogs.
+
+        :param q: Keywords or a phrase to search for in the article title and body.  See the official News API
+            `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
+        :type q: str or None
+
+        :param sources: A comma-seperated string of identifiers for the news sources or blogs you want headlines from.
+            Use :meth:`NewsApiClient.get_sources` to locate these programmatically, or look at the
+            `sources index <https://newsapi.org/sources>`_.
+        :type sources: str or None
+
+        :param domains:  A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com)
+            to restrict the search to.
+        :type domains: str or None
+
+        :param exclude_domains:  A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com)
+            to remove from the results.
+        :type exclude_domains: str or None
+
+        :param from_param: A date and optional time for the oldest article allowed.
+            If a str, the format must conform to ISO-8601 specifically as one of either
+            ``%Y-%m-%d`` (e.g. *2019-09-07*) or ``%Y-%m-%dT%H:%M:%S`` (e.g. *2019-09-07T13:04:15*).
+            An int or float is assumed to represent a Unix timestamp.  All datetime inputs are assumed to be UTC.
+        :type from_param: str or datetime.datetime or datetime.date or int or float or None
+
+        :param to: A date and optional time for the newest article allowed.
+            If a str, the format must conform to ISO-8601 specifically as one of either
+            ``%Y-%m-%d`` (e.g. *2019-09-07*) or ``%Y-%m-%dT%H:%M:%S`` (e.g. *2019-09-07T13:04:15*).
+            An int or float is assumed to represent a Unix timestamp.  All datetime inputs are assumed to be UTC.
+        :type to: str or datetime.datetime or datetime.date or int or float or None
+
+        :param language: The 2-letter ISO-639-1 code of the language you want to get headlines for.
+            See :data:`newsapi.const.languages` for the set of allowed values.
+        :type language: str or None
+
+        :param sort_by: The order to sort articles in.
+            See :data:`newsapi.const.sort_method` for the set of allowed values.
+        :type sort_by: str or None
+
+        :return: JSON response as nested Python dictionary.
+        :rtype: dict
+        :raises NewsAPIException: If the ``"status"`` value of the response is ``"error"`` rather than ``"ok"``.
         """
-        Search through millions of articles from news sources and blogs.
 
-        Search through millions of articles from over 30,000 large
-        and small news sources and blogs. This includes breaking
-        news as well as lesser articles.
-
-        Optional parameters:
-            (str) q - return headlines w/ specified coin! Valid values are:
-                      'bitcoin', 'trump', 'tesla', 'ethereum', etc
-
-            (str) sources - return headlines of news sources! some Valid values are:
-                            'bbc-news', 'the-verge', 'abc-news', 'crypto coins news',
-                            'ary news','associated press','wired','aftenposten','australian financial review','axios',
-                            'bbc news','bild','blasting news','bloomberg','business insider','engadget','google news',
-                            'hacker news','info money,'recode','techcrunch','techradar','the next web','the verge' etc.
-
-            (str) domains - A comma-seperated string of domains
-                            (eg bbc.co.uk, techcrunch.com, engadget.com)
-                            to restrict the search to.
-
-            (str) exclude_domains - A comma_seperated string of domains to be excluded from the search
-
-            (str, date, datetime, float, int, or None)
-            from_param - A date and optional time for the oldest article allowed.
-                         (e.g. 2018-03-05 or 2018-03-05T03:46:15)
-
-            (str, date, datetime, float, int, or None)
-            to - A date and optional time for the newest article allowed.
-
-            (str) language - The 2-letter ISO-639-1 code of the language you want to get headlines for.
-                             Valid values are:
-                             'ar','de','en','es','fr','he','it','nl','no','pt','ru','se','ud','zh'
-
-            (str) sort_by - The order to sort the articles in. Valid values are: 'relevancy','popularity','publishedAt'
-
-            (int) page_size - The number of results to return per page (request). 20 is the default, 100 is the maximum.
-
-            (int) page - Use this to page through the results if the total results found is greater than the page size.
-        """
-
-        # Define Payload
         payload = {}
 
         # Keyword/Phrase
@@ -274,27 +305,27 @@ class NewsApiClient(object):
         return r.json()
 
     def get_sources(self, category=None, language=None, country=None):  # noqa: C901
+        """Call the `/sources` endpoint.
+
+        Fetch the subset of news publishers that /top-headlines are available from.
+
+        :param category: Find sources that display news of this category.
+            See :data:`newsapi.const.categories` for the set of allowed values.
+        :type category: str or None
+
+        :param language: Find sources that display news in a specific language.
+            See :data:`newsapi.const.languages` for the set of allowed values.
+        :type language: str or None
+
+        :param country: Find sources that display news in a specific country.
+            See :data:`newsapi.const.countries` for the set of allowed values.
+        :type country: str or None
+
+        :return: JSON response as nested Python dictionary.
+        :rtype: dict
+        :raises NewsAPIException: If the ``"status"`` value of the response is ``"error"`` rather than ``"ok"``.
         """
-        Returns the subset of news publishers that top headlines...
 
-        Optional parameters:
-            (str) category - The category you want to get headlines for! Valid values are:
-                             'business','entertainment','general','health','science','sports','technology'
-
-            (str) language - The 2-letter ISO-639-1 code of the language you want to get headlines for.
-                             Valid values are:
-                             'ar','de','en','es','fr','he','it','nl','no','pt','ru','se','ud','zh'
-
-            (str) country - The 2-letter ISO 3166-1 code of the country you want to get headlines! Valid values are:
-                            'ae','ar','at','au','be','bg','br','ca','ch','cn','co','cu','cz','de','eg','fr','gb','gr',
-                            'hk','hu','id','ie','il','in','it','jp','kr','lt','lv','ma','mx','my','ng','nl','no','nz',
-                            'ph','pl','pt','ro','rs','ru','sa','se','sg','si','sk','th','tr','tw','ua','us'
-
-            (str) category - The category you want to get headlines for! Valid values are:
-                             'business','entertainment','general','health','science','sports','technology'
-        """
-
-        # Define Payload
         payload = {}
 
         # Language
@@ -317,7 +348,7 @@ class NewsApiClient(object):
             else:
                 raise TypeError("country param should be of type str")
 
-                # Category
+        # Category
         if category is not None:
             if is_valid_string(category):
                 if category in const.categories:

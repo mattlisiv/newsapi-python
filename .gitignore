@@ -3,7 +3,7 @@
 build/
 dist/
 *.egg-info/
-*.rst
 venv/
 *log.txt
 *~
+docs/build/
