@@ -63,3 +63,5 @@ html_last_updated_fmt = ""
 # -- Autodoc -----------------------------------------------------------------
 
 autodoc_warningiserror = True
+
+master_doc = 'index'
