@@ -236,14 +236,14 @@ class NewsApiClient(object):
 
         payload = {}
 
-        # Keyword/Phrase in Title
+        # Keyword/Phrase
         if q is not None:
             if is_valid_string(q):
                 payload["q"] = q
             else:
                 raise TypeError("keyword/phrase q param should be of type str")
 
-        # Keyword/Phrase
+        # Keyword/Phrase in Title
         if qintitle is not None:
             if is_valid_string(qintitle):
                 payload["qintitle"] = qintitle
