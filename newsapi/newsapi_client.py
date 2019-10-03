@@ -30,7 +30,7 @@ class NewsApiClient(object):
             self.request_method = session
 
     def get_top_headlines(  # noqa: C901
-        self, q=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
+        self, q=None, qintitle=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
     ):
         """Call the `/top-headlines` endpoint.
 
@@ -41,6 +41,10 @@ class NewsApiClient(object):
         date published first.
 
         :param q: Keywords or a phrase to search for in the article title and body.  See the official News API
+            `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
+        :type q: str or None
+
+        :param qintitle: Keywords or a phrase to search for in the article title and body.  See the official News API
             `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
         :type q: str or None
 
@@ -88,6 +92,13 @@ class NewsApiClient(object):
                 payload["q"] = q
             else:
                 raise TypeError("keyword/phrase q param should be of type str")
+
+        # Keyword/Phrase in Title
+        if qintitle is not None:
+            if is_valid_string(qintitle):
+                payload["qintitle"] = qintitle
+            else:
+                raise TypeError("keyword/phrase qintitle param should be of type str")
 
         # Sources
         if (sources is not None) and ((country is not None) or (category is not None)):
@@ -162,6 +173,7 @@ class NewsApiClient(object):
     def get_everything(  # noqa: C901
         self,
         q=None,
+        qintitle=None,
         sources=None,
         domains=None,
         exclude_domains=None,
@@ -177,6 +189,10 @@ class NewsApiClient(object):
         Search through millions of articles from over 30,000 large and small news sources and blogs.
 
         :param q: Keywords or a phrase to search for in the article title and body.  See the official News API
+            `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
+        :type q: str or None
+
+        :param qintitle: Keywords or a phrase to search for in the article title and body.  See the official News API
             `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
         :type q: str or None
 
@@ -226,6 +242,13 @@ class NewsApiClient(object):
                 payload["q"] = q
             else:
                 raise TypeError("keyword/phrase q param should be of type str")
+
+        # Keyword/Phrase in Title
+        if qintitle is not None:
+            if is_valid_string(qintitle):
+                payload["qintitle"] = qintitle
+            else:
+                raise TypeError("keyword/phrase qintitle param should be of type str")
 
         # Sources
         if sources is not None:
