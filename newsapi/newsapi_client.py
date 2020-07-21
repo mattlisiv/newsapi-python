@@ -229,6 +229,14 @@ class NewsApiClient(object):
             See :data:`newsapi.const.sort_method` for the set of allowed values.
         :type sort_by: str or None
 
+        :param page: The number of results to return per page (request).
+            20 is the default, 100 is the maximum.
+        :type page: int or None
+
+        :param page_size: Use this to page through the results if the total results found is
+            greater than the page size.
+        :type page_size: int or None
+
         :return: JSON response as nested Python dictionary.
         :rtype: dict
         :raises NewsAPIException: If the ``"status"`` value of the response is ``"error"`` rather than ``"ok"``.
