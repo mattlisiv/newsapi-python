@@ -69,8 +69,7 @@ countries = {
 
 #: The 2-letter ISO-639-1 code of the language you want to get articles for.  If not specified,
 #: the results span all languages.
-languages = {"ar", "en", "cn", "de", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "se", "ud", "zh",
-             "en-US"}
+languages = {"ar", "en", "de", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh"}
 
 #: The category you want to get articles for.  If not specified,
 #: the results span all categories.
