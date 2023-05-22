@@ -93,7 +93,7 @@ class NewsApiClient(object):
             if is_valid_string_or_list(q):
                 payload["q"] = q
             else:
-                raise TypeError("keyword/phrase q param should be of type str")
+                raise TypeError("keyword/phrase q param should be of type str or list of type str")
 
         # Keyword/Phrase in Title
         if qintitle is not None:
@@ -251,7 +251,7 @@ class NewsApiClient(object):
             if is_valid_string_or_list(q):
                 payload["q"] = q
             else:
-                raise TypeError("keyword/phrase q param should be of type str")
+                raise TypeError("keyword/phrase q param should be of type str or list of type str")
 
         # Keyword/Phrase in Title
         if qintitle is not None:
