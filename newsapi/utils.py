@@ -54,6 +54,13 @@ PY3 = sys.version_info[0] == 3
 
 if PY3:
 
+    def is_valid_string_or_list(var):
+        if isinstance(var, list):
+            return all((is_valid_string(item) for item in var))
+
+        else:
+            return is_valid_string(var)
+
     def is_valid_string(var):
         return isinstance(var, str)
 
@@ -62,6 +69,13 @@ if PY3:
 
 
 elif PY2:
+
+    def is_valid_string_or_list(var):
+        if isinstance(var, list):
+            return all((is_valid_string(item) for item in var))
+
+        else:
+            return is_valid_string(var)
 
     def is_valid_string(var):
         return isinstance(var, basestring)  # noqa

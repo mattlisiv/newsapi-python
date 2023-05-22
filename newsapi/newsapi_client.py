@@ -5,7 +5,9 @@ import requests
 from newsapi import const
 from newsapi.newsapi_auth import NewsApiAuth
 from newsapi.newsapi_exception import NewsAPIException
-from newsapi.utils import is_valid_string, stringify_date_param
+from newsapi.utils import (
+    is_valid_string, is_valid_string_or_list, stringify_date_param
+)
 
 
 class NewsApiClient(object):
@@ -88,7 +90,7 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if is_valid_string(q):
+            if is_valid_string_or_list(q):
                 payload["q"] = q
             else:
                 raise TypeError("keyword/phrase q param should be of type str")
@@ -246,7 +248,7 @@ class NewsApiClient(object):
 
         # Keyword/Phrase
         if q is not None:
-            if is_valid_string(q):
+            if is_valid_string_or_list(q):
                 payload["q"] = q
             else:
                 raise TypeError("keyword/phrase q param should be of type str")
