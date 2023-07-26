@@ -24,12 +24,26 @@ class NewsApiClient(object):
     :type session: `requests.Session <https://2.python-requests.org/en/master/user/advanced/#session-objects>`_ or None
     """
 
-    def __init__(self, api_key, session=None):
+    def __init__(self, api_key, session=None, proxy=None):
         self.auth = NewsApiAuth(api_key=api_key)
         if session is None:
             self.request_method = requests
         else:
             self.request_method = session
+        self.proxy = proxy
+
+    def send_request(self, url, payload):
+        # Helper method to send requests with proxy support if available
+        if self.proxy:
+            # Set up proxy configuration for the request
+            proxies = {
+                "http": self.proxy,
+                "https": self.proxy,
+            }
+            r = self.request_method.get(url, auth=self.auth, timeout=30, params=payload, proxies=proxies)
+        else:
+            r = self.request_method.get(url, auth=self.auth, timeout=30, params=payload)
+        return r
 
     def get_top_headlines(  # noqa: C901
         self, q=None, qintitle=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
@@ -164,7 +178,7 @@ class NewsApiClient(object):
                 raise TypeError("page param should be an int")
 
         # Send Request
-        r = self.request_method.get(const.TOP_HEADLINES_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.send_request(const.TOP_HEADLINES_URL, payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
@@ -329,7 +343,7 @@ class NewsApiClient(object):
                 raise TypeError("page param should be an int")
 
         # Send Request
-        r = self.request_method.get(const.EVERYTHING_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.send_request(const.EVERYTHING_URL, payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
@@ -392,7 +406,7 @@ class NewsApiClient(object):
                 raise TypeError("category param should be of type str")
 
         # Send Request
-        r = self.request_method.get(const.SOURCES_URL, auth=self.auth, timeout=30, params=payload)
+        r = self.send_request(const.SOURCES_URL, payload)
 
         # Check Status of Request
         if r.status_code != requests.codes.ok:
