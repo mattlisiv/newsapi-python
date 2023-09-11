@@ -1,12 +1,11 @@
 """Constants and allowed parameter values specified in the News API."""
-
 TOP_HEADLINES_URL = "https://newsapi.org/v2/top-headlines"
 EVERYTHING_URL = "https://newsapi.org/v2/everything"
 SOURCES_URL = "https://newsapi.org/v2/sources"
 
 #: The 2-letter ISO 3166-1 code of the country you want to get headlines for.  If not specified,
 #: the results span all countries.
-countries = {
+COUNTRIES = {
     "ae",
     "ar",
     "at",
@@ -22,7 +21,6 @@ countries = {
     "cz",
     "de",
     "eg",
-    "es",
     "fr",
     "gb",
     "gr",
@@ -32,7 +30,6 @@ countries = {
     "ie",
     "il",
     "in",
-    "is",
     "it",
     "jp",
     "kr",
@@ -46,7 +43,6 @@ countries = {
     "no",
     "nz",
     "ph",
-    "pk",
     "pl",
     "pt",
     "ro",
@@ -64,17 +60,73 @@ countries = {
     "us",
     "ve",
     "za",
-    "zh",
+}
+
+DEFAULT_LANGUAGES = {
+    "ae": "ar",
+    "ar": "es",
+    "at": "de",
+    "au": "en",
+    "be": "nl",
+    "bg": "bg",
+    "br": "pt",
+    "ca": "en",
+    "ch": "de",
+    "cn": "zh",
+    "co": "es",
+    "cu": "es",
+    "cz": "cs",
+    "de": "de",
+    "eg": "ar",
+    "fr": "fr",
+    "gb": "en",
+    "gr": "el",
+    "hk": "zh",
+    "hu": "hu",
+    "id": "id",
+    "ie": "en",
+    "il": "he",
+    "in": "hi",
+    "it": "it",
+    "jp": "ja",
+    "kr": "ko",
+    "lt": "lt",
+    "lv": "lv",
+    "ma": "ar",
+    "mx": "es",
+    "my": "ms",
+    "ng": "en",
+    "nl": "nl",
+    "no": "no",
+    "nz": "en",
+    "ph": "en",
+    "pl": "pl",
+    "pt": "pt",
+    "ro": "ro",
+    "rs": "sr",
+    "ru": "ru",
+    "sa": "ar",
+    "se": "sv",
+    "sg": "en",
+    "si": "sl",
+    "sk": "sk",
+    "th": "th",
+    "tr": "tr",
+    "tw": "zh",
+    "ua": "uk",
+    "us": "en",
+    "ve": "es",
+    "za": "zu",
 }
 
 #: The 2-letter ISO-639-1 code of the language you want to get articles for.  If not specified,
 #: the results span all languages.
-languages = {"ar", "en", "cn", "de", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "se", "ud", "zh",
-             "en-US"}
+LANGUAGES = {"ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh"}
 
 #: The category you want to get articles for.  If not specified,
 #: the results span all categories.
-categories = {"business", "entertainment", "general", "health", "science", "sports", "technology"}
+CATEGORIES = {"business", "entertainment", "general", "health", "science", "sports", "technology"}
 
 #: The order to sort article results in.  If not specified, the default is ``"publishedAt"``.
-sort_method = {"relevancy", "popularity", "publishedAt"}
+SORT_METHOD = {"relevancy", "popularity", "publishedAt"}
+

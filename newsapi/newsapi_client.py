@@ -32,7 +32,7 @@ class NewsApiClient(object):
             self.request_method = session
 
     def get_top_headlines(  # noqa: C901
-        self, q=None, qintitle=None, sources=None, language="en", country=None, category=None, page_size=None, page=None
+        self, q=None, qintitle=None, sources=None, language=None, country=None, category=None, page_size=None, page=None
     ):
         """Call the `/top-headlines` endpoint.
 
@@ -116,17 +116,18 @@ class NewsApiClient(object):
         # Language
         if language is not None:
             if is_valid_string(language):
-                if language in const.languages:
+                if language in const.LANGUAGES:
                     payload["language"] = language
                 else:
                     raise ValueError("invalid language")
             else:
                 raise TypeError("language param should be of type str")
 
+
         # Country
         if country is not None:
             if is_valid_string(country):
-                if country in const.countries:
+                if country in const.COUNTRIES:
                     payload["country"] = country
                 else:
                     raise ValueError("invalid country")
@@ -136,7 +137,7 @@ class NewsApiClient(object):
         # Category
         if category is not None:
             if is_valid_string(category):
-                if category in const.categories:
+                if category in const.CATEGORIES:
                     payload["category"] = category
                 else:
                     raise ValueError("invalid category")
@@ -162,7 +163,8 @@ class NewsApiClient(object):
                     raise ValueError("page param should be an int greater than 0")
             else:
                 raise TypeError("page param should be an int")
-
+        if payload.get("language") is None:
+            payload["language"] = const.DEFAULT_LANGUAGES.get(country)
         # Send Request
         r = self.request_method.get(const.TOP_HEADLINES_URL, auth=self.auth, timeout=30, params=payload)
 
@@ -291,7 +293,7 @@ class NewsApiClient(object):
         # Language
         if language is not None:
             if is_valid_string(language):
-                if language not in const.languages:
+                if language not in const.LANGUAGES:
                     raise ValueError("invalid language")
                 else:
                     payload["language"] = language
@@ -301,7 +303,7 @@ class NewsApiClient(object):
         # Sort Method
         if sort_by is not None:
             if is_valid_string(sort_by):
-                if sort_by in const.sort_method:
+                if sort_by in const.SORT_METHOD:
                     payload["sortBy"] = sort_by
                 else:
                     raise ValueError("invalid sort")
@@ -330,7 +332,7 @@ class NewsApiClient(object):
 
         # Send Request
         r = self.request_method.get(const.EVERYTHING_URL, auth=self.auth, timeout=30, params=payload)
-
+        
         # Check Status of Request
         if r.status_code != requests.codes.ok:
             raise NewsAPIException(r.json())
@@ -364,7 +366,7 @@ class NewsApiClient(object):
         # Language
         if language is not None:
             if is_valid_string(language):
-                if language in const.languages:
+                if language in const.LANGUAGES:
                     payload["language"] = language
                 else:
                     raise ValueError("invalid language")
@@ -374,7 +376,7 @@ class NewsApiClient(object):
         # Country
         if country is not None:
             if is_valid_string(country):
-                if country in const.countries:
+                if country in const.COUNTRIES:
                     payload["country"] = country
                 else:
                     raise ValueError("invalid country")
@@ -384,7 +386,7 @@ class NewsApiClient(object):
         # Category
         if category is not None:
             if is_valid_string(category):
-                if category in const.categories:
+                if category in const.CATEGORIES:
                     payload["category"] = category
                 else:
                     raise ValueError("invalid category")
@@ -392,6 +394,8 @@ class NewsApiClient(object):
                 raise TypeError("category param should be of type str")
 
         # Send Request
+        if payload.get("language") is None:
+            payload["language"] = const.DEFAULT_LANGUAGES.get(country)
         r = self.request_method.get(const.SOURCES_URL, auth=self.auth, timeout=30, params=payload)
 
         # Check Status of Request
