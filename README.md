@@ -39,7 +39,7 @@ $ python -m pip install newsapi-python
 After installation, import the client class into your project:
 
 ```python
-from newsapi import NewsApiClient
+from newsapi.newsapi_client import NewsApiClient
 ```
 
 Initialize the client with your API key:
