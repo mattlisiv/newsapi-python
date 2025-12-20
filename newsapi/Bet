@@ -1,0 +1,9 @@
+SELECT
+    product_id,
+    SUM(quantity) AS total_units_sold
+FROM sales
+WHERE product_category = 'pet supplies'
+  AND sale_date >= CURRENT_DATE - INTERVAL '2 years'
+GROUP BY product_id
+ORDER BY total_units_sold DESC
+LIMIT 10;
