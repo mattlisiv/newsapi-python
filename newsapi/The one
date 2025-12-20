@@ -1,0 +1,72 @@
+import os
+import requests
+from datetime import datetime
+
+# ==============================
+# CONFIGURATION
+# ==============================
+API_KEY = os.getenv("NEWSAPI_KEY", "PUT_YOUR_API_KEY_HERE")  # <- replace or use env var
+COUNTRY = "us"        # e.g. 'us', 'gb', 'in'
+CATEGORY = None       # e.g. 'business', 'technology', 'sports', 'health', or None
+PAGE_SIZE = 20        # Max 100 per request
+
+BASE_URL = "https://newsapi.org/v2/top-headlines"
+
+
+def fetch_top_headlines(country="us", category=None, page_size=20):
+    """
+    Fetch top headlines from NewsAPI.
+    """
+    params = {
+        "apiKey": API_KEY,
+        "country": country,
+        "pageSize": page_size,
+    }
+
+    if category:
+        params["category"] = category
+
+    response = requests.get(BASE_URL, params=params, timeout=10)
+    response.raise_for_status()
+    data = response.json()
+
+    if data.get("status") != "ok":
+        raise RuntimeError(f"API error: {data}")
+
+    return data.get("articles", [])
+
+
+def print_headlines(articles):
+    """
+    Pretty-print the list of articles.
+    """
+    if not articles:
+        print("No articles found.")
+        return
+
+    print("=" * 80)
+    print(f"Top headlines ({len(articles)} articles) - {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print("=" * 80)
+
+    for idx, article in enumerate(articles, start=1):
+        title = article.get("title") or "No title"
+        source = (article.get("source") or {}).get("name") or "Unknown source"
+        url = article.get("url") or "No URL"
+        published_at = article.get("publishedAt") or "Unknown time"
+
+        print(f"\n[{idx}] {title}")
+        print(f"    Source   : {source}")
+        print(f"    Published: {published_at}")
+        print(f"    Link     : {url}")
+
+
+def main():
+    try:
+        articles = fetch_top_headlines(country=COUNTRY, category=CATEGORY, page_size=PAGE_SIZE)
+        print_headlines(articles)
+    except Exception as e:
+        print(f"Error fetching news: {e}")
+
+
+if __name__ == "__main__":
+    main()
