@@ -146,6 +146,11 @@ class NewsApiClientTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.api.get_everything(page=page)
 
+        # Raises a ValueError if searchIn param is not equal to either title, description, or content
+        searchIn = "date"
+        with self.assertRaises(ValueError):
+            self.api.get_everything(searchIn=searchIn)
+
     def test_api_get_sources(self):
         # Raise TypeError if language param is not of type str
         language = 0

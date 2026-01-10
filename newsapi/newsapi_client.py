@@ -178,6 +178,7 @@ class NewsApiClient(object):
         self,
         q=None,
         qintitle=None,
+        searchIn=None,
         sources=None,
         domains=None,
         exclude_domains=None,
@@ -197,6 +198,10 @@ class NewsApiClient(object):
         :type q: str or None
 
         :param qintitle: Keywords or a phrase to search for in the article title and body.  See the official News API
+            `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
+        :type q: str or None
+
+        :param searchIn: The fields to restrict your q search to. Should be either title, content, or description. See the official News API
             `documentation <https://newsapi.org/docs/endpoints/everything>`_ for search syntax and examples.
         :type q: str or None
 
@@ -261,6 +266,16 @@ class NewsApiClient(object):
                 payload["qintitle"] = qintitle
             else:
                 raise TypeError("keyword/phrase qintitle param should be of type str")
+
+        # SearchIn
+        if searchIn is not None:
+            if is_valid_string(searchIn):
+                if searchIn in ["title", "content", "description"]:
+                    payload["searchIn"] = searchIn
+                else:
+                    raise ValueError(
+                        f"searchIn param should be either title, content, or description. {searchIn} is given. "
+                    )
 
         # Sources
         if sources is not None:
